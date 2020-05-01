@@ -10,6 +10,7 @@ class cell:
         self.val = val
         self.count = 1
         self.possibilies = [False for i in range(9)]
+        # print("set to" , val)
 
     def isSet(self)-> bool:
         if self.count == 1:
@@ -31,7 +32,7 @@ class cell:
 class matrix:
     def __init__(self,grid):       
         self.currentcell = [0,0]
-        self.lefwerga3tany = False
+        self.lefwega3tany = False
         self.grid = grid
         self.cells = [[cell()for x in range( 9 )]for y in range(9)]
         for x in range(9):
@@ -54,14 +55,14 @@ class matrix:
                 if self.cells[i][j].val == val:
                     count += 1
                     if count > 1:
-                        self.lefwerga3tany = True
+                        self.lefwega3tany = True
         return ret
 
     def loop(self):
         change = True
         while change:
-            global complexity
-            complexity += 1
+            global complexity 
+            complexity +=1
             change = False
             for i in range(9):
                 for j in range(9):
@@ -69,15 +70,18 @@ class matrix:
                         val = self.cells[i][j].val
                         for k in range(9):
                             if self.cells[i][k].val == val and j != k:
-                                self.lefwerga3tany = True
+                                self.lefwega3tany = True
                             change |= self.cells[i][k].removePossibility(val)
                             
                         for k in range(9):
                             if self.cells[k][j].val == val and i != k:
-                                self.lefwerga3tany = True
+                                self.lefwega3tany = True
                             change |= self.cells[k][j].removePossibility(val)
                         (x,y) = self.getQuadrent(i,j)
                         change |= self.removePossibilityQuadrent(x,y,val)
+                    else:
+                        pass
+                        # print(i,j,self.cells[i][j].possibilies)
 
     def get_next_empty_cell(self):
         for self.currentcell[0] in range(self.currentcell[0] , 9):
@@ -87,19 +91,18 @@ class matrix:
         return False
 
     def backtracking(self):
-        m  =  matrix([[0 for i in range(9)]for j in range(9)])
-        m.cells = deepcopy(self.cells)
         global complexity
         complexity += 1
+        m  =  matrix([[0 for i in range(9)]for j in range(9)])
+        m.cells = deepcopy(self.cells)
         if m.get_next_empty_cell():
             isMessedup = True
             for i in range(9):
                 if m.cells[m.currentcell[0]][m.currentcell[1]].possibilies[i]:
-                    
                     temp = deepcopy(m)
                     temp.cells[m.currentcell[0]][m.currentcell[1]].set(i+1)
                     temp.loop()
-                    if temp.lefwerga3tany : 
+                    if temp.lefwega3tany : 
                         continue
                     isMessedup = False 
                     if temp.backtracking():
