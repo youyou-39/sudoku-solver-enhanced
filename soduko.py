@@ -53,7 +53,7 @@ class matrix:
                 
                 if self.cells[i][j].val == val:
                     count += 1
-                    if count > 2:
+                    if count > 1:
                         self.lefwerga3tany = True
         return ret
 
